@@ -1,0 +1,4 @@
+[
+  {"type": "Lecture", "date": "2026-01-10", "place": "Aud1", "participants": 50, "description": "Intro"},
+  {"type": "Workshop", "date": "2026-01-11", "place": "Lab", "participants": 20, "description": "Hands-on"}
+]

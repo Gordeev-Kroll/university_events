@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>University Events Client</h1>
+    <button onclick="fetchEvents()">List Events</button>
+    <button onclick="addEvent()">Add Event</button>
+    <button onclick="analyze()">Analyze</button>
+    <button onclick="register()">Register to Event</button>
+    <button onclick="deleteEvent()">Delete Event</button>
+    <div id="output"></div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000';
+
+        async function fetchEvents() {
+            const res = await fetch(`${API_URL}/events`);
+            const data = await res.json();
+            document.getElementById('output').innerText = data.join('\n');
+        }
+
+        async function addEvent() {
+            const type = prompt('Type:');
+            const date = prompt('Date:');
+            const place = prompt('Place:');
+            const parts = prompt('Participants:');
+            const desc = prompt('Desc:');
+            await fetch(`${API_URL}/events`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({type, date, place, participants: parseInt(parts), description: desc})
+            });
+            alert('Added');
+        }
+
+        async function analyze() {
+            const res = await fetch(`${API_URL}/analyze`);
+            const data = await res.json();
+            document.getElementById('output').innerText = JSON.stringify(data);
+        }
+
+        async function register() {
+            const id = prompt('Event ID:');
+            await fetch(`${API_URL}/register/${id}`, {method: 'POST'});
+            alert('Registered');
+        }
+
+        async function deleteEvent() {
+            const id = prompt('Event ID to delete:');
+            await fetch(`${API_URL}/events/${id}`, {method: 'DELETE'});
+            alert('Deleted');
+        }
+    </script>
+</body>
+</html>
